@@ -17,19 +17,20 @@ public class PackageRepo {
         return packages;
     }
 
-    public Package buildPackage(String departureDate, Car car, String... others) {
+    public Package buildPackage(String departureDate, Car car, String senderName, String senderPhoneNo,
+                                String departureAddress, String awb, String deliveryAddress, String deliveryDate, String recipientName, String recipientPhoneNo) {
         Package pack = new Package();
 
         pack.setId(RANDOM.nextInt());
-        pack.setSenderName(others[0]);
-        pack.setSenderPhoneNo(others[1]);
-        pack.setDepartureAddress(others[2]);
+        pack.setSenderName(senderName);
+        pack.setSenderPhoneNo(senderPhoneNo);
+        pack.setDepartureAddress(departureAddress);
         pack.setDepartureDate(departureDate);
-        pack.setAwb(others[3]);
-        pack.setDeliveryAddress(others[4]);
-        pack.setDeliveryDate(others[5]);
-        pack.setRecipientName(others[6]);
-        pack.setRecipientPhoneNo(others[7]);
+        pack.setAwb(awb);
+        pack.setDeliveryAddress(deliveryAddress);
+        pack.setDeliveryDate(deliveryDate);
+        pack.setRecipientName(recipientName);
+        pack.setRecipientPhoneNo(recipientPhoneNo);
         pack.setCar(car);
         packages.add(pack);
 

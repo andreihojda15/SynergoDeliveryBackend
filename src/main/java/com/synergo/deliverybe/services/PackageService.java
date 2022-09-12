@@ -17,7 +17,10 @@ public class PackageService {
         return packageRepo.getAll();
     }
 
-    public Package buildPackage(String departureDate, Car car, String... others) {
-        return packageRepo.buildPackage(departureDate, car, others);
+    public Package buildPackage(String departureDate, Car car, String senderName,
+                                String senderPhoneNo, String departureAddress, String awb,
+                                String deliveryAddress, String deliveryDate, String recipientName, String recipientPhoneNo) {
+        return packageRepo.buildPackage(departureDate, car, senderName, senderPhoneNo,
+                departureAddress, awb, deliveryAddress, deliveryDate, recipientName, recipientPhoneNo);
     }
 }
