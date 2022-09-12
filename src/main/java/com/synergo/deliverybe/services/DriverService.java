@@ -13,7 +13,8 @@ public class DriverService {
     @Autowired
     private DriverRepo driverRepo;
 
-    public List<Driver> getAll(int howMany) {
-        return driverRepo.getAll(howMany);
+    public List<Driver> getAll() {
+        return driverRepo.getAll();
     }
+
 }

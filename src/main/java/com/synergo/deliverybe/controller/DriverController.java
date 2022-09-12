@@ -19,8 +19,8 @@ public class DriverController {
     private DriverService driverService;
 
     @GetMapping("/drivers/all")
-    public ResponseEntity<List<DriverDto>> fetchAllDrivers(@RequestParam(name = "how-many") int howMany) {
-        List<Driver> drivers = driverService.getAll(howMany);
+    public ResponseEntity<List<DriverDto>> fetchAllDrivers() {
+        List<Driver> drivers = driverService.getAll();
 
         return ResponseEntity.status(HttpStatus.OK).body(drivers.stream().map(DriverDto::valueOf).toList());
     }
