@@ -17,7 +17,7 @@ public class Driver {
     @Column
     private String name;
     @Column
-    private String phoneNo;
+    private String phone;
 //    @OneToOne(fetch = FetchType.LAZY)
 //    private Car car;
 
