@@ -1,21 +1,40 @@
 package com.synergo.deliverybe.model;
 
-import lombok.Data;
+import lombok.*;
 
-@Data
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity
+@Getter
+@Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
 public class Package {
 
+    @Id
     private Integer id;
-    private String senderName;
-    private String senderPhoneNo;
-    private String departureAddress;
-    private String departureDate;
+    @Column
+    private String sender_name;
+    @Column
+    private String sender_phone;
+    @Column
+    private String departure_address;
+    @Column
+    private String departure_date;
+    @Column
     private String awb;
-    private String deliveryAddress;
-    private String deliveryDate;
-    private String recipientName;
-    private String recipientPhoneNo;
-    private Car car;
-
+    @Column
+    private String delivery_address;
+    @Column
+    private String delivery_date;
+    @Column
+    private String recipient_name;
+    @Column
+    private String recipient_phone;
+//    @Column
+//    private Car car;
 
 }

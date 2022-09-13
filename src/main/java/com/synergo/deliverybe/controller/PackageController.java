@@ -33,9 +33,9 @@ public class PackageController {
         Car car = new Car();
         car.setId(RANDOM.nextInt());
 
-        Package added = packageService.buildPackage(pack.getDepartureDate(), car,
-        pack.getSenderName(), pack.getSenderPhoneNo(), pack.getDepartureAddress(),
-        pack.getAwb(), pack.getDeliveryAddress(), pack.getDeliveryDate(), pack.getRecipientName(), pack.getRecipientPhoneNo());
+        Package added = packageService.buildPackage(RANDOM.nextInt(), pack.getDeparture_date(), car,
+        pack.getSender_name(), pack.getSender_phone(), pack.getDeparture_address(),
+        pack.getAwb(), pack.getDelivery_address(), pack.getDelivery_date(), pack.getRecipient_name(), pack.getRecipient_phone());
 
         return ResponseEntity.status(HttpStatus.OK).body(PackageDto.valueOf(added));
     }

@@ -14,13 +14,25 @@ public class PackageService {
     private PackageRepo packageRepo;
 
     public List<Package> getAll() {
-        return packageRepo.getAll();
+        return packageRepo.findAll();
     }
 
-    public Package buildPackage(String departureDate, Car car, String senderName,
+    public Package buildPackage(int id, String departureDate, Car car, String senderName,
                                 String senderPhoneNo, String departureAddress, String awb,
                                 String deliveryAddress, String deliveryDate, String recipientName, String recipientPhoneNo) {
-        return packageRepo.buildPackage(departureDate, car, senderName, senderPhoneNo,
-                departureAddress, awb, deliveryAddress, deliveryDate, recipientName, recipientPhoneNo);
+        Package pack = new Package();
+        pack.setId(id);
+        pack.setSender_name(senderName);
+        pack.setSender_phone(senderPhoneNo);
+        pack.setDeparture_address(departureAddress);
+        pack.setDeparture_date(departureDate);
+        pack.setAwb(awb);
+        pack.setDelivery_address(deliveryAddress);
+        pack.setDelivery_date(deliveryDate);
+        pack.setRecipient_name(recipientName);
+        pack.setRecipient_phone(recipientPhoneNo);
+//        pack.setCar(car);
+
+        return packageRepo.save(pack);
     }
 }
