@@ -14,6 +14,6 @@ public class DriverService {
     private DriverRepo driverRepo;
 
     public List<Driver> getAll(int howMany) {
-        return driverRepo.getAll(howMany);
+        return driverRepo.findAll();
     }
 }

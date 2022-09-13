@@ -23,7 +23,7 @@ public class DriverDto {
                 .id(driver.getId())
                 .name(driver.getName())
                 .phoneNo(driver.getPhoneNo())
-                .carId(driver.getCar().getId())
+//                .carId(driver.getCar().getId())
                 .build();
     }
 
