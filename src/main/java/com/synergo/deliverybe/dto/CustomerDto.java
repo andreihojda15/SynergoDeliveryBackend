@@ -25,7 +25,6 @@ public class CustomerDto {
                 .name(customer.getName())
                 .phoneNumber(customer.getPhoneNumber())
                 .address(customer.getAddress())
-                .packageId(customer.getPackageId())
                 .build();
     }
 }

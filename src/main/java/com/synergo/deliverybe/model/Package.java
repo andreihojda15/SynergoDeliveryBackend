@@ -2,9 +2,7 @@ package com.synergo.deliverybe.model;
 
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 @Getter
@@ -34,7 +32,8 @@ public class Package {
     private String recipient_name;
     @Column
     private String recipient_phone;
-//    @Column
-//    private Car car;
+    @ManyToOne
+    @JoinColumn(name = "customer_id", nullable = false)
+    private Customer customer;
 
 }
