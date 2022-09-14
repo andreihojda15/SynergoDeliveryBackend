@@ -12,30 +12,30 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class PackageDto {
     private Integer id;
-    private String senderName;
-    private String senderPhoneNo;
-    private String departureAddress;
-    private String departureDate;
+    private String sender_name;
+    private String sender_phone;
+    private String departure_address;
+    private String departure_date;
     private String awb;
-    private String deliveryAddress;
-    private String deliveryDate;
-    private String recipientName;
-    private String recipientPhoneNo;
+    private String delivery_address;
+    private String delivery_date;
+    private String recipient_name;
+    private String recipient_phone;
     private Integer carId;
 
     public static PackageDto valueOf(Package pack){
         return PackageDto.builder()
                 .id(pack.getId())
-                .senderName(pack.getSenderName())
-                .senderPhoneNo(pack.getSenderPhoneNo())
-                .departureAddress(pack.getDepartureAddress())
-                .departureDate(pack.getDepartureDate())
+                .sender_name(pack.getSender_name())
+                .sender_phone(pack.getSender_phone())
+                .departure_address(pack.getDeparture_address())
+                .departure_date(pack.getDeparture_date())
                 .awb(pack.getAwb())
-                .deliveryAddress(pack.getDeliveryAddress())
-                .deliveryDate(pack.getDeliveryDate())
-                .recipientName(pack.getRecipientName())
-                .recipientPhoneNo(pack.getRecipientPhoneNo())
-                .carId(pack.getCar().getId())
+                .delivery_address(pack.getDelivery_address())
+                .delivery_date(pack.getDelivery_date())
+                .recipient_name(pack.getRecipient_name())
+                .recipient_phone(pack.getRecipient_phone())
+//                .carId(pack.getCar().getId())
                 .build();
     }
 }
