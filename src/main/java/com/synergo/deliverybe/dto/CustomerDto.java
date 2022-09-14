@@ -14,7 +14,7 @@ public class CustomerDto {
     private Integer id;
     private String name;
     private String phoneNumber;
-    private String adresse;
+    private String address;
     private String packageId;
 
 
@@ -24,7 +24,7 @@ public class CustomerDto {
                 .id(customer.getId())
                 .name(customer.getName())
                 .phoneNumber(customer.getPhoneNumber())
-                .adresse(customer.getAdresse())
+                .address(customer.getAddress())
                 .packageId(customer.getPackageId())
                 .build();
     }
