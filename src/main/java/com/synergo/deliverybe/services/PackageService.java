@@ -1,7 +1,9 @@
 package com.synergo.deliverybe.services;
 
 import com.synergo.deliverybe.model.Car;
+import com.synergo.deliverybe.model.Customer;
 import com.synergo.deliverybe.model.Package;
+import com.synergo.deliverybe.repository.CustomerRepo;
 import com.synergo.deliverybe.repository.PackageRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,6 +14,8 @@ import java.util.List;
 public class PackageService {
     @Autowired
     private PackageRepo packageRepo;
+    @Autowired
+    private CustomerRepo customerRepo;
 
     public List<Package> getAll() {
         return packageRepo.findAll();
@@ -34,5 +38,9 @@ public class PackageService {
 //        pack.setCar(car);
 
         return packageRepo.save(pack);
+    }
+
+    public List<Package> getAllPackagesByCustomer(Integer customerId) {
+            return packageRepo.getPackagesByCustomer(customerRepo.getReferenceById(customerId));
     }
 }

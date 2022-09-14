@@ -2,9 +2,8 @@ package com.synergo.deliverybe.model;
 
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Getter
@@ -21,6 +20,7 @@ public class Customer {
     private String phoneNumber;
     @Column
     private String address;
-    @Column
-    private String packageId;
+//
+//    @OneToMany
+//    private List<Package> packages;
 }
