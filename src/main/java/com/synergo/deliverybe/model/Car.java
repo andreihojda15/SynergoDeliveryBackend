@@ -14,14 +14,14 @@ public class Car {
 
     @Id
     private Integer id;
-    @Column
-    private double costOfTheCar;
+//    @Column
+//    private double costOfTheCar;
     @Column
     private String registration_number;
     @Column
     private String status;
     @ManyToOne
-    @JoinColumn(name = "package_id", nullable = false)
+    @JoinColumn(name = "pack_id", nullable = false)
     private Package pack;
     @OneToOne
     @JoinColumn(name = "driver_id", nullable = false)
