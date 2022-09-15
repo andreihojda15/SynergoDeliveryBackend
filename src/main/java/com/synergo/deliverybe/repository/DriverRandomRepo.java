@@ -35,7 +35,7 @@ public class DriverRandomRepo implements IDriverRepo {
 
         Car car = new Car();
         car.setId(RANDOM.nextInt());
-        car.setCostOfTheCar(RANDOM.nextDouble());
+//        car.setCostOfTheCar(RANDOM.nextDouble());
 //        randomDriven.setCar(car);
 
         return randomDriven;
