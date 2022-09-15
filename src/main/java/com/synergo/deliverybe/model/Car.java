@@ -2,11 +2,9 @@ package com.synergo.deliverybe.model;
 
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 
-//@Entity
+@Entity
 @Getter
 @Setter
 @Builder
@@ -16,6 +14,14 @@ public class Car {
 
     @Id
     private Integer id;
+//    @Column
+//    private double costOfTheCar;
     @Column
-    private double costOfTheCar;
+    private String registration_number;
+    @Column
+    private String status;
+    @ManyToOne
+    @JoinColumn(name = "pack_id", nullable = false)
+    private Package pack;
+
 }

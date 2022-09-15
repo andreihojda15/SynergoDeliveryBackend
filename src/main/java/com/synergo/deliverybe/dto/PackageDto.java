@@ -21,7 +21,7 @@ public class PackageDto {
     private String delivery_date;
     private String recipient_name;
     private String recipient_phone;
-    private Integer carId;
+    private Integer customerId;
 
     public static PackageDto valueOf(Package pack){
         return PackageDto.builder()
@@ -35,7 +35,7 @@ public class PackageDto {
                 .delivery_date(pack.getDelivery_date())
                 .recipient_name(pack.getRecipient_name())
                 .recipient_phone(pack.getRecipient_phone())
-//                .carId(pack.getCar().getId())
+                .customerId(pack.getCustomer().getId())
                 .build();
     }
 }

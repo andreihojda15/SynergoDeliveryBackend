@@ -18,7 +18,8 @@ public class Driver {
     private String name;
     @Column
     private String phone;
-//    @OneToOne(fetch = FetchType.LAZY)
-//    private Car car;
+    @OneToOne
+    @JoinColumn(name = "car_id")
+    private Car car;
 
 }
