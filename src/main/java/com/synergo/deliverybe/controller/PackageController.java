@@ -9,12 +9,11 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
+import javax.swing.text.html.Option;
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 
 @Controller
@@ -34,6 +33,12 @@ public class PackageController {
     public ResponseEntity<List<PackageDto>> fetchAllPackagesByCustomer(@RequestParam(value = "customer_id") Integer customerId) {
         List<Package> packages = packageService.getAllPackagesByCustomer(customerId);
         return ResponseEntity.status(HttpStatus.OK).body(packages.stream().map(PackageDto::valueOf).toList());
+    }
+
+    @GetMapping("/packages/{id}")
+    public ResponseEntity<Optional<Package>> fetchPackageById(@PathVariable("id") Integer id) {
+        Optional<Package> pack = packageService.getPackageById(id);
+        return ResponseEntity.status(HttpStatus.OK).body(pack);
     }
 
     @PostMapping("packages/add")
