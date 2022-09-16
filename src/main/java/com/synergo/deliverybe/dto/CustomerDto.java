@@ -15,8 +15,6 @@ public class CustomerDto {
     private String name;
     private String phoneNumber;
     private String address;
-    private String packageId;
-
 
     public static CustomerDto valueOf(Customer customer)
     {

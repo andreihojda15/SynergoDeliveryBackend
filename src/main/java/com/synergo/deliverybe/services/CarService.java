@@ -1,7 +1,7 @@
 package com.synergo.deliverybe.services;
 
-import com.synergo.deliverybe.model.Driver;
-import com.synergo.deliverybe.repository.DriverRepo;
+import com.synergo.deliverybe.model.Car;
+import com.synergo.deliverybe.repository.CarRepo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,14 +10,11 @@ import java.util.List;
 
 @Service
 @Slf4j
-public class DriverService {
-
+public class CarService {
     @Autowired
-    private DriverRepo driverRepo;
+    private CarRepo carRepo;
 
-    public List<Driver> getAll() {
-        return driverRepo.findAll();
-
+    public List<Car> getAll() {
+        return carRepo.findAll();
     }
-
 }

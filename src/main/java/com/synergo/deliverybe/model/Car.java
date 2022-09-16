@@ -2,11 +2,9 @@ package com.synergo.deliverybe.model;
 
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 
-//@Entity
+@Entity
 @Getter
 @Setter
 @Builder
@@ -15,7 +13,11 @@ import javax.persistence.Id;
 public class Car {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @Column
-    private double costOfTheCar;
+    private String registration_number;
+    @Column
+    private String status;
+
 }

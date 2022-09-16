@@ -3,13 +3,15 @@ package com.synergo.deliverybe.repository;
 import com.synergo.deliverybe.model.Car;
 import com.synergo.deliverybe.model.Package;
 
+import java.time.Instant;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 //@Repository
 @Deprecated
-public class PackageRepoOld {
+class PackageRepoOld {
     private Random RANDOM = new Random(1_000_000);
     List<Package> packages = new ArrayList<>();
 
@@ -25,13 +27,12 @@ public class PackageRepoOld {
         pack.setSender_name(senderName);
         pack.setSender_phone(senderPhoneNo);
         pack.setDeparture_address(departureAddress);
-        pack.setDeparture_date(departureDate);
+        pack.setDeparture_date(LocalDate.parse(departureDate));
         pack.setAwb(awb);
         pack.setDelivery_address(deliveryAddress);
-        pack.setDelivery_date(deliveryDate);
+        pack.setDelivery_date(LocalDate.parse(deliveryDate));
         pack.setRecipient_name(recipientName);
         pack.setRecipient_phone(recipientPhoneNo);
-//        pack.setCar(car);
         packages.add(pack);
 
         return pack;

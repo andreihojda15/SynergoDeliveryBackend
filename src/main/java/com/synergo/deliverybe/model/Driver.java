@@ -13,12 +13,14 @@ import javax.persistence.*;
 public class Driver {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @Column
     private String name;
     @Column
     private String phone;
-//    @OneToOne(fetch = FetchType.LAZY)
-//    private Car car;
+    @OneToOne
+    @JoinColumn(name = "car_id")
+    private Car car;
 
 }
