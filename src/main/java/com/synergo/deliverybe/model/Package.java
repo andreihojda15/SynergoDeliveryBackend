@@ -15,6 +15,7 @@ import java.time.LocalDate;
 public class Package {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @Column
     private String sender_name;

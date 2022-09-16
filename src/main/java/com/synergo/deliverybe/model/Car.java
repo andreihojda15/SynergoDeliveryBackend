@@ -13,6 +13,7 @@ import javax.persistence.*;
 public class Car {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @Column
     private String registration_number;

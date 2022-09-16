@@ -16,32 +16,33 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 
-@Controller
+@RestController
+@RequestMapping("/packages")
 public class PackageController {
 
     private Random RANDOM = new Random(1_000_000);
     @Autowired
     private PackageService packageService;
 
-    @GetMapping("packages/all")
+    @GetMapping("/all")
     public ResponseEntity<List<PackageDto>> fetchAllPackages() {
         List<Package> packages = packageService.getAll();
         return ResponseEntity.status(HttpStatus.OK).body(packages.stream().map(PackageDto::valueOf).toList());
     }
 
-    @GetMapping("packages/customer")
+    @GetMapping("/customer")
     public ResponseEntity<List<PackageDto>> fetchAllPackagesByCustomer(@RequestParam(value = "customer_id") Integer customerId) {
         List<Package> packages = packageService.getAllPackagesByCustomer(customerId);
         return ResponseEntity.status(HttpStatus.OK).body(packages.stream().map(PackageDto::valueOf).toList());
     }
 
-    @GetMapping("/packages/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<Optional<Package>> fetchPackageById(@PathVariable("id") Integer id) {
         Optional<Package> pack = packageService.getPackageById(id);
         return ResponseEntity.status(HttpStatus.OK).body(pack);
     }
 
-    @PostMapping("packages/add")
+    @PostMapping("/add")
     public ResponseEntity<PackageDto> addPackage(@RequestBody Package pack) {
         Car car = new Car();
         car.setId(RANDOM.nextInt());
