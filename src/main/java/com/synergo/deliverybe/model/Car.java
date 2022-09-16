@@ -23,8 +23,5 @@ public class Car {
     @ManyToOne
     @JoinColumn(name = "pack_id", nullable = false)
     private Package pack;
-    @OneToOne
-    @JoinColumn(name = "driver_id", nullable = false)
-    private Driver driver;
 
 }

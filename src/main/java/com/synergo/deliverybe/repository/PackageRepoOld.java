@@ -9,7 +9,7 @@ import java.util.Random;
 
 //@Repository
 @Deprecated
-public class PackageRepoOld {
+class PackageRepoOld {
     private Random RANDOM = new Random(1_000_000);
     List<Package> packages = new ArrayList<>();
 

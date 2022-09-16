@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PackageService {
@@ -24,6 +25,7 @@ public class PackageService {
     public Package buildPackage(int id, String departureDate, Car car, String senderName,
                                 String senderPhoneNo, String departureAddress, String awb,
                                 String deliveryAddress, String deliveryDate, String recipientName, String recipientPhoneNo) {
+        Customer c = customerRepo.findByName(recipientName);
         Package pack = new Package();
         pack.setId(id);
         pack.setSender_name(senderName);
@@ -35,12 +37,16 @@ public class PackageService {
         pack.setDelivery_date(deliveryDate);
         pack.setRecipient_name(recipientName);
         pack.setRecipient_phone(recipientPhoneNo);
-//        pack.setCar(car);
+        pack.setCustomer(c);
 
         return packageRepo.save(pack);
     }
 
     public List<Package> getAllPackagesByCustomer(Integer customerId) {
-            return packageRepo.getPackagesByCustomer(customerRepo.getReferenceById(customerId));
+        return packageRepo.getPackagesByCustomer(customerRepo.getReferenceById(customerId));
+    }
+
+    public Optional<Package> getPackageById(Integer id) {
+        return packageRepo.findById(id);
     }
 }
