@@ -3,6 +3,7 @@ package com.synergo.deliverybe.model;
 import lombok.*;
 
 import javax.persistence.*;
+import java.time.Instant;
 
 @Entity
 @Getter
@@ -21,13 +22,13 @@ public class Package {
     @Column
     private String departure_address;
     @Column
-    private String departure_date;
+    private Instant departure_date;
     @Column
     private String awb;
     @Column
     private String delivery_address;
     @Column
-    private String delivery_date;
+    private Instant delivery_date;
     @Column
     private String recipient_name;
     @Column

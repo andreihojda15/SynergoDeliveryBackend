@@ -21,7 +21,7 @@ public class Car {
     @Column
     private String status;
     @ManyToOne
-    @JoinColumn(name = "pack_id", nullable = false)
+    @JoinColumn(name = "pack_id", nullable = true)
     private Package pack;
 
 }
