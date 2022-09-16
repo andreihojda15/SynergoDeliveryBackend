@@ -44,17 +44,14 @@ public class PackageController {
 
     @PostMapping("/add")
     public ResponseEntity<PackageDto> addPackage(@RequestBody Package pack) {
-        Car car = new Car();
-        car.setId(RANDOM.nextInt());
-        System.out.println("Pack : " + pack);
-        Package added = packageService.buildPackage(RANDOM.nextInt(), pack.getDeparture_date(), car,
-        pack.getSender_name(), pack.getSender_phone(), pack.getDeparture_address(),
-        pack.getAwb(), pack.getDelivery_address(), pack.getDelivery_date(), pack.getRecipient_name(), pack.getRecipient_phone());
+        Package added = packageService.buildPackage(RANDOM.nextInt(), pack.getDeparture_date(),
+                pack.getSender_name(), pack.getSender_phone(), pack.getDeparture_address(),
+                pack.getAwb(), pack.getDelivery_address(), pack.getDelivery_date(), pack.getRecipient_name(), pack.getRecipient_phone());
 
         return ResponseEntity.status(HttpStatus.OK).body(PackageDto.valueOf(added));
     }
 
-    @PutMapping("packages/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<Optional<Package>> updatePackage(@RequestBody Package pack, @PathVariable Integer id) {
         Optional<Package> newPackage = packageService.updatePackage(pack, id);
         return ResponseEntity.status(HttpStatus.OK).body(newPackage);

@@ -2,6 +2,7 @@ package com.synergo.deliverybe.repository;
 
 import com.synergo.deliverybe.model.Driver;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -43,9 +44,6 @@ import org.springframework.stereotype.Repository;
 
 public interface DriverRepo extends JpaRepository<Driver, Integer> {
 
-
-
-//    public Driver buildDriver(String id, String name, String[] others) {
-//        return buildDriver(id,name,others);
-//    }
+    @Query("SELECT d FROM Driver d WHERE d.name=?1")
+    Driver findByName(String name);
 }
