@@ -3,13 +3,12 @@ package com.synergo.deliverybe.services;
 import com.synergo.deliverybe.model.Car;
 import com.synergo.deliverybe.model.Customer;
 import com.synergo.deliverybe.model.Package;
-import com.synergo.deliverybe.repository.CarRepo;
 import com.synergo.deliverybe.repository.CustomerRepo;
 import com.synergo.deliverybe.repository.PackageRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.Instant;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,16 +19,13 @@ public class PackageService {
     @Autowired
     private CustomerRepo customerRepo;
 
-    @Autowired
-    private CarRepo carRepo;
-
     public List<Package> getAll() {
         return packageRepo.findAll();
     }
 
-    public Package buildPackage(int id, Instant departureDate, Car car, String senderName,
+    public Package buildPackage(int id, LocalDate departureDate, Car car, String senderName,
                                 String senderPhoneNo, String departureAddress, String awb,
-                                String deliveryAddress, Instant deliveryDate, String recipientName, String recipientPhoneNo) {
+                                String deliveryAddress, LocalDate deliveryDate, String recipientName, String recipientPhoneNo) {
         Customer c = customerRepo.findByName(recipientName);
         Package pack = new Package();
         pack.setId(id);
@@ -43,6 +39,7 @@ public class PackageService {
         pack.setRecipient_name(recipientName);
         pack.setRecipient_phone(recipientPhoneNo);
         pack.setCustomer(c);
+        pack.setCar(car);
 
         return packageRepo.save(pack);
     }
@@ -56,10 +53,6 @@ public class PackageService {
     }
 
     public void deleteById(Integer id) {
-        Car c = carRepo.findByPackId(id);
-        c.setPack(null);
-        carRepo.save(c);
-
         packageRepo.deleteById(id);
     }
 
@@ -71,14 +64,14 @@ public class PackageService {
                 element.setSender_phone(pack.getSender_phone());
             if (pack.getDeparture_address().length() != 0)
                 element.setDeparture_address(pack.getDeparture_address());
-//            if (pack.getDeparture_date().length() != 0)
-//                element.setDeparture_date(pack.getDeparture_date());
+            if (pack.getDeparture_date() != null)
+                element.setDeparture_date(pack.getDeparture_date());
             if (pack.getAwb().length() != 0)
                 element.setAwb(pack.getAwb());
             if (pack.getDelivery_address().length() != 0)
                 element.setDelivery_address(pack.getDelivery_address());
-//            if (pack.getDelivery_date().length() != 0)
-//                element.setDelivery_date(pack.getDelivery_date());
+            if (pack.getDelivery_date() != null)
+                element.setDelivery_date(pack.getDelivery_date());
             if (pack.getRecipient_name().length() != 0)
                 element.setRecipient_name(pack.getRecipient_name());
             if (pack.getRecipient_phone().length() != 0)
@@ -88,10 +81,4 @@ public class PackageService {
         });
     }
 
-//    public Optional<Package> updatePackageById(Integer id) {
-//        return packageRepo.findById(id)
-//                .map(pack -> {
-//                    pack.setNa
-//                });
-//    }
 }

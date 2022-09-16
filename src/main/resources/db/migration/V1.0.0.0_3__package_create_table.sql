@@ -9,5 +9,8 @@ create table package
   delivery_address varchar(255) not null,
   delivery_date date not null,
   recipient_name varchar(255) not null,
-  recipient_phone varchar(255) not null
+  recipient_phone varchar(255) not null,
+  car_id  integer,
+  constraint pack_car_id_fk
+    foreign key (car_id) references car (id)
 );

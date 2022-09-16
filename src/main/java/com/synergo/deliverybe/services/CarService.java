@@ -16,6 +16,5 @@ public class CarService {
 
     public List<Car> getAll() {
         return carRepo.findAll();
-
     }
 }

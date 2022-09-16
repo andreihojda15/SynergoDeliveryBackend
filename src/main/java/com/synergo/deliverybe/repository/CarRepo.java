@@ -9,7 +9,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface CarRepo extends JpaRepository<Car, Integer> {
 
-    @Query("SELECT c FROM Car c WHERE c.pack.id=?1")
-    Car findByPackId(Integer id);
 }
 

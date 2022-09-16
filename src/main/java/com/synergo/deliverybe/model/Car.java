@@ -14,14 +14,9 @@ public class Car {
 
     @Id
     private Integer id;
-//    @Column
-//    private double costOfTheCar;
     @Column
     private String registration_number;
     @Column
     private String status;
-    @ManyToOne
-    @JoinColumn(name = "pack_id", nullable = true)
-    private Package pack;
 
 }
