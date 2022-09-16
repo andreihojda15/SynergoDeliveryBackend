@@ -17,13 +17,11 @@ public class CarDto {
     private Integer id;
     private String registration_number;
     private String status;
-    private Integer packId;
     public static CarDto valueOf(Car car) {
         return CarDto.builder()
                 .id(car.getId())
                 .registration_number(car.getRegistration_number())
                 .status(car.getStatus())
-                .packId(car.getPack().getId())
                 .build();
     }
 }

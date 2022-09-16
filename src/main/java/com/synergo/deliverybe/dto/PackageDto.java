@@ -6,6 +6,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.Instant;
+import java.time.LocalDate;
+
 @Data
 @Builder
 @NoArgsConstructor
@@ -15,13 +18,14 @@ public class PackageDto {
     private String sender_name;
     private String sender_phone;
     private String departure_address;
-    private String departure_date;
+    private LocalDate departure_date;
     private String awb;
     private String delivery_address;
-    private String delivery_date;
+    private LocalDate delivery_date;
     private String recipient_name;
     private String recipient_phone;
     private Integer customerId;
+    private Integer carId;
 
     public static PackageDto valueOf(Package pack){
         return PackageDto.builder()
@@ -36,6 +40,7 @@ public class PackageDto {
                 .recipient_name(pack.getRecipient_name())
                 .recipient_phone(pack.getRecipient_phone())
                 .customerId(pack.getCustomer().getId())
+                .carId(pack.getCar() != null ? pack.getCar().getId() : null)
                 .build();
     }
 }

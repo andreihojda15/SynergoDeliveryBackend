@@ -3,6 +3,8 @@ package com.synergo.deliverybe.model;
 import lombok.*;
 
 import javax.persistence.*;
+import java.time.Instant;
+import java.time.LocalDate;
 
 @Entity
 @Getter
@@ -22,13 +24,13 @@ public class Package {
     @Column
     private String departure_address;
     @Column
-    private String departure_date;
+    private LocalDate departure_date;
     @Column
     private String awb;
     @Column
     private String delivery_address;
     @Column
-    private String delivery_date;
+    private LocalDate delivery_date;
     @Column
     private String recipient_name;
     @Column
@@ -36,5 +38,7 @@ public class Package {
     @ManyToOne
     @JoinColumn(name = "customer_id", nullable = false)
     private Customer customer;
-
+    @ManyToOne
+    @JoinColumn(name = "car_id", nullable = true)
+    private Car car;
 }
