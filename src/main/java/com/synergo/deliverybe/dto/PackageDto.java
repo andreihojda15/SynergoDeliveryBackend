@@ -40,7 +40,7 @@ public class PackageDto {
                 .recipient_name(pack.getRecipient_name())
                 .recipient_phone(pack.getRecipient_phone())
                 .customerId(pack.getCustomer().getId())
-                .carId(pack.getCar().getId())
+                .carId(pack.getCar() != null ? pack.getCar().getId() : null)
                 .build();
     }
 }

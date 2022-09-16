@@ -39,7 +39,9 @@ public class PackageService {
         pack.setRecipient_name(recipientName);
         pack.setRecipient_phone(recipientPhoneNo);
         pack.setCustomer(c);
-        pack.setCar(car);
+        if (car != null) {
+            pack.setCar(car);
+        }
 
         return packageRepo.save(pack);
     }
