@@ -63,7 +63,8 @@ public class PackageService {
     }
 
     public void deleteById(Integer id) {
-        packageRepo.deleteById(id);
+        if(packageRepo.findById(id).isPresent())
+            packageRepo.deleteById(id);
     }
 
     public Optional<Package> updatePackage(Package pack, Integer id) {
