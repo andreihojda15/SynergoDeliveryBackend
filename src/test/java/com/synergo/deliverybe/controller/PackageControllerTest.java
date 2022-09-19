@@ -50,7 +50,7 @@ public class PackageControllerTest {
         given(service.getAll()).willReturn(allEmployees);
 
         // when
-        mvc.perform(get("/packages/all").contentType(MediaType.APPLICATION_JSON)).andExpect(status().isOk())
+        mvc.perform(get("/api/packages").contentType(MediaType.APPLICATION_JSON)).andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(3)));
 
         // then

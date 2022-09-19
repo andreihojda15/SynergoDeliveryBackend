@@ -44,9 +44,9 @@ public class PackageController {
 
     @PostMapping
     public ResponseEntity<PackageDto> addPackage(@RequestBody Package pack) {
-        Package added = packageService.buildPackage(RANDOM.nextInt(), pack.getDeparture_date(),
-                pack.getSender_name(), pack.getSender_phone(), pack.getDeparture_address(),
-                pack.getAwb(), pack.getDelivery_address(), pack.getDelivery_date(), pack.getRecipient_name(), pack.getRecipient_phone());
+        Package added = packageService.buildPackage(RANDOM.nextInt(), pack.getDepartureDate(),
+                pack.getSenderName(), pack.getSenderPhone(), pack.getDepartureAddress(),
+                pack.getAwb(), pack.getDeliveryAddress(), pack.getDeliveryDate(), pack.getRecipientName(), pack.getRecipientPhone());
 
         return ResponseEntity.status(HttpStatus.OK).body(PackageDto.valueOf(added));
     }

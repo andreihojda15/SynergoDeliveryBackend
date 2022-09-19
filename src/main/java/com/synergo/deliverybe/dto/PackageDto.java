@@ -15,30 +15,30 @@ import java.time.LocalDate;
 @AllArgsConstructor
 public class PackageDto {
     private Integer id;
-    private String sender_name;
-    private String sender_phone;
-    private String departure_address;
-    private LocalDate departure_date;
+    private String senderName;
+    private String senderPhone;
+    private String departureAddress;
+    private LocalDate departureDate;
     private String awb;
-    private String delivery_address;
-    private LocalDate delivery_date;
-    private String recipient_name;
-    private String recipient_phone;
+    private String deliveryAddress;
+    private LocalDate deliveryDate;
+    private String recipientName;
+    private String recipientPhone;
     private Integer customerId;
     private Integer carId;
 
     public static PackageDto valueOf(Package pack){
         return PackageDto.builder()
                 .id(pack.getId())
-                .sender_name(pack.getSender_name())
-                .sender_phone(pack.getSender_phone())
-                .departure_address(pack.getDeparture_address())
-                .departure_date(pack.getDeparture_date())
+                .senderName(pack.getSenderName())
+                .senderPhone(pack.getSenderPhone())
+                .departureAddress(pack.getDepartureAddress())
+                .departureDate(pack.getDepartureDate())
                 .awb(pack.getAwb())
-                .delivery_address(pack.getDelivery_address())
-                .delivery_date(pack.getDelivery_date())
-                .recipient_name(pack.getRecipient_name())
-                .recipient_phone(pack.getRecipient_phone())
+                .deliveryAddress(pack.getDeliveryAddress())
+                .deliveryDate(pack.getDeliveryDate())
+                .recipientName(pack.getRecipientName())
+                .recipientPhone(pack.getRecipientPhone())
                 .customerId(pack.getCustomer().getId())
                 .carId(pack.getCar() != null ? pack.getCar().getId() : null)
                 .build();
