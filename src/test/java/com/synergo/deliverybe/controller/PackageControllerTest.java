@@ -2,7 +2,9 @@ package com.synergo.deliverybe.controller;
 
 import com.synergo.deliverybe.model.Customer;
 import com.synergo.deliverybe.model.Package;
+import com.synergo.deliverybe.repository.PackageRepo;
 import com.synergo.deliverybe.services.PackageService;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -19,6 +21,7 @@ import java.util.Optional;
 import static org.hamcrest.Matchers.*;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -88,7 +91,7 @@ public class PackageControllerTest {
     public void find_by_id_not_exists() throws Exception {
 
         // given
-        int id = (int)(Math.random()*100);
+        int id = (int) (Math.random() * 100);
         given(service.getPackageById(id)).willReturn(Optional.empty());
 
         // when
@@ -112,7 +115,7 @@ public class PackageControllerTest {
         Package package2 = new Package();
         package2.setCustomer(alex);
 
-        int id = (int)(Math.random()*100);
+        int id = (int) (Math.random() * 100);
         package1.setId(id);
         package2.setId(id);
 
@@ -124,6 +127,36 @@ public class PackageControllerTest {
 
         // then
         verify(service, times(1)).getAllPackagesByCustomer(alex.getId());
+        reset(service);
+    }
+
+    @Test
+    public void deleteById() throws Exception {
+        // given
+        Package package1 = new Package();
+        int id = (int) (Math.random() * 100);
+        package1.setId(id);
+
+        // when
+        mvc.perform(delete("/api/packages/" + package1.getId()).contentType(MediaType.APPLICATION_JSON)).andExpect(status().isNoContent());
+
+        // then
+        verify(service, times(1)).deleteById(package1.getId());
+        reset(service);
+    }
+
+    @Disabled
+    @Test
+    public void deleteByIdFail() throws Exception {
+        // given
+        Package package1 = new Package();
+        int id = (int) (Math.random() * 100);
+
+        // when
+        mvc.perform(delete("/api/packages/" + id).contentType(MediaType.APPLICATION_JSON)).andExpect(status().isBadRequest());
+
+        // then
+        verify(service, times(1)).deleteById(id);
         reset(service);
     }
 }

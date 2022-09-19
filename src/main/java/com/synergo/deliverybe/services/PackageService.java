@@ -10,6 +10,7 @@ import com.synergo.deliverybe.repository.PackageRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -62,8 +63,8 @@ public class PackageService {
     }
 
     public void deleteById(Integer id) {
-        if(packageRepo.findById(id).isPresent())
-            packageRepo.deleteById(id);
+        packageRepo.findById((id)).orElseThrow(() -> new EntityNotFoundException());
+        packageRepo.deleteById(id);
     }
 
     public Optional<Package> updatePackage(Package pack, Integer id) {

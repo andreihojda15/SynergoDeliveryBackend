@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.EntityNotFoundException;
 import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Optional;
@@ -59,7 +60,11 @@ public class PackageController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deletePackage(@PathVariable Integer id) {
-        packageService.deleteById(id);
+        try {
+            packageService.deleteById(id);
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e);
+        }
         return ResponseEntity.noContent().build();
     }
 }
