@@ -39,7 +39,7 @@ public class PackageController {
     @GetMapping("/{id}")
     public ResponseEntity<Optional<Package>> fetchPackageById(@PathVariable("id") Integer id) {
         Optional<Package> pack = packageService.getPackageById(id);
-        return ResponseEntity.status(HttpStatus.OK).body(pack);
+        return ResponseEntity.status(pack.isPresent() ? HttpStatus.OK : HttpStatus.NOT_FOUND).body(pack.isPresent() ? pack : Optional.empty());
     }
 
     @PostMapping

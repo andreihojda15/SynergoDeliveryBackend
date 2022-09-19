@@ -1,6 +1,5 @@
 package com.synergo.deliverybe.services;
 
-import com.synergo.deliverybe.model.Car;
 import com.synergo.deliverybe.model.Customer;
 import com.synergo.deliverybe.model.Driver;
 import com.synergo.deliverybe.model.Package;
