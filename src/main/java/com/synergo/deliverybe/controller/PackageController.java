@@ -21,7 +21,6 @@ import java.util.Random;
 @RequestMapping("/api/packages")
 public class PackageController {
 
-    private Random RANDOM = new Random(1_000_000);
     @Autowired
     private PackageService packageService;
 
@@ -45,7 +44,7 @@ public class PackageController {
 
     @PostMapping
     public ResponseEntity<PackageDto> addPackage(@RequestBody Package pack) {
-        Package added = packageService.buildPackage(RANDOM.nextInt(), pack.getDepartureDate(),
+        Package added = packageService.buildPackage(pack.getDepartureDate(),
                 pack.getSenderName(), pack.getSenderPhone(), pack.getDepartureAddress(),
                 pack.getAwb(), pack.getDeliveryAddress(), pack.getDeliveryDate(), pack.getRecipientName(), pack.getRecipientPhone());
 

@@ -32,13 +32,12 @@ public class PackageService {
         return packageRepo.findAll();
     }
 
-    public Package buildPackage(int id, LocalDate departureDate, String senderName,
+    public Package buildPackage(LocalDate departureDate, String senderName,
                                 String senderPhoneNo, String departureAddress, String awb,
                                 String deliveryAddress, LocalDate deliveryDate, String recipientName, String recipientPhoneNo) {
         Customer customer = customerRepo.findByName(recipientName);
         Package pack = new Package();
 
-        pack.setId(id);
         pack.setSenderName(senderName);
         pack.setSenderPhone(senderPhoneNo);
         pack.setDepartureAddress(departureAddress);
