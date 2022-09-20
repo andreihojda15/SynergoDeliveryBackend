@@ -18,4 +18,34 @@ public class CustomerService {
         log.debug("Someone called us");
         return customerRepo.findAll();
     }
+
+    public void deleteCustomer(Integer id)
+    {
+        customerRepo.deleteById(id);
+    }
+
+    public Customer getCustomerbyId(Integer id)
+    {
+        return customerRepo.getReferenceById(id);
+    }
+
+    public Customer addCustomer(String name,String addresse, String phone)
+    {
+
+        Customer customer = new Customer();
+        customer.setName(name);
+        customer.setAddress(addresse);
+        customer.setPhoneNumber(phone);
+        return customerRepo.save(customer);
+    }
+
+    public Customer editCustomer(int id,String name,String addresse, String phone)
+    {
+        Customer customer = getCustomerbyId(id);
+        customer.setName(name);
+        customer.setAddress(addresse);
+        customer.setPhoneNumber(phone);
+        return customerRepo.save(customer);
+    }
+
 }
