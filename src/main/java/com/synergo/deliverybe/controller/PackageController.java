@@ -60,11 +60,12 @@ public class PackageController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deletePackage(@PathVariable Integer id) {
+        String result;
         try {
-            packageService.deleteById(id);
+            result = packageService.deleteById(id);
         } catch (EntityNotFoundException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.status(200).body(result);
     }
 }

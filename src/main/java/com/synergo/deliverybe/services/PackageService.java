@@ -62,9 +62,12 @@ public class PackageService {
         return packageRepo.findById(id);
     }
 
-    public void deleteById(Integer id) {
-        packageRepo.findById((id)).orElseThrow(() -> new EntityNotFoundException());
+    public String deleteById(Integer id) {
+        Optional<Package> packageToDelete = packageRepo.findById(id);
+        if(packageToDelete.isEmpty())
+            throw new EntityNotFoundException("Can't delete package because it doesn't exist.");
         packageRepo.deleteById(id);
+        return "Successfully deleted package";
     }
 
     public Optional<Package> updatePackage(Package pack, Integer id) {

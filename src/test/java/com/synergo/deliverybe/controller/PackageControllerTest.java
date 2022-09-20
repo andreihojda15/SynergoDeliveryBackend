@@ -14,6 +14,7 @@ import org.springframework.cache.support.NullValue;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -145,15 +146,15 @@ public class PackageControllerTest {
         reset(service);
     }
 
-    @Disabled
     @Test
     public void deleteByIdFail() throws Exception {
         // given
-        Package package1 = new Package();
         int id = (int) (Math.random() * 100);
 
+        given(service.deleteById(id)).willThrow(new EntityNotFoundException());
+
         // when
-        mvc.perform(delete("/api/packages/" + id).contentType(MediaType.APPLICATION_JSON)).andExpect(status().isBadRequest());
+        mvc.perform(delete("/api/packages/" + id).contentType(MediaType.APPLICATION_JSON));
 
         // then
         verify(service, times(1)).deleteById(id);
