@@ -1,6 +1,5 @@
 package com.synergo.deliverybe.services;
 
-import com.synergo.deliverybe.model.Car;
 import com.synergo.deliverybe.model.Customer;
 import com.synergo.deliverybe.model.Driver;
 import com.synergo.deliverybe.model.Package;
@@ -11,6 +10,7 @@ import com.synergo.deliverybe.repository.PackageRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -32,22 +32,21 @@ public class PackageService {
         return packageRepo.findAll();
     }
 
-    public Package buildPackage(int id, LocalDate departureDate, String senderName,
+    public Package buildPackage(LocalDate departureDate, String senderName,
                                 String senderPhoneNo, String departureAddress, String awb,
                                 String deliveryAddress, LocalDate deliveryDate, String recipientName, String recipientPhoneNo) {
         Customer customer = customerRepo.findByName(recipientName);
         Package pack = new Package();
 
-        pack.setId(id);
-        pack.setSender_name(senderName);
-        pack.setSender_phone(senderPhoneNo);
-        pack.setDeparture_address(departureAddress);
-        pack.setDeparture_date(departureDate);
+        pack.setSenderName(senderName);
+        pack.setSenderPhone(senderPhoneNo);
+        pack.setDepartureAddress(departureAddress);
+        pack.setDepartureDate(departureDate);
         pack.setAwb(awb);
-        pack.setDelivery_address(deliveryAddress);
-        pack.setDelivery_date(deliveryDate);
-        pack.setRecipient_name(recipientName);
-        pack.setRecipient_phone(recipientPhoneNo);
+        pack.setDeliveryAddress(deliveryAddress);
+        pack.setDeliveryDate(deliveryDate);
+        pack.setRecipientName(recipientName);
+        pack.setRecipientPhone(recipientPhoneNo);
         pack.setCustomer(customer);
         pack.setCar(null);
 
@@ -62,42 +61,46 @@ public class PackageService {
         return packageRepo.findById(id);
     }
 
-    public void deleteById(Integer id) {
+    public String deleteById(Integer id) {
+        Optional<Package> packageToDelete = packageRepo.findById(id);
+        if(packageToDelete.isEmpty())
+            throw new EntityNotFoundException("Can't delete package because it doesn't exist.");
         packageRepo.deleteById(id);
+        return "Successfully deleted package";
     }
 
     public Optional<Package> updatePackage(Package pack, Integer id) {
         return packageRepo.findById(id).map(element -> {
-            if (pack.getSender_name().length() != 0) {
-                element.setSender_name(pack.getSender_name());
+            if (pack.getSenderName().length() != 0) {
+                element.setSenderName(pack.getSenderName());
                 // if driver has been changed, update car_id of package
-                Driver driver = driverRepo.findByName(pack.getSender_name());
+                Driver driver = driverRepo.findByName(pack.getSenderName());
                 if (driver != null)
                     element.setCar(driver.getCar());
                 else element.setCar(null);
             }
-            if (pack.getSender_phone().length() != 0)
-                element.setSender_phone(pack.getSender_phone());
-            if (pack.getDeparture_address().length() != 0)
-                element.setDeparture_address(pack.getDeparture_address());
-            if (pack.getDeparture_date() != null)
-                element.setDeparture_date(pack.getDeparture_date());
+            if (pack.getSenderPhone().length() != 0)
+                element.setSenderPhone(pack.getSenderPhone());
+            if (pack.getDepartureAddress().length() != 0)
+                element.setDepartureAddress(pack.getDepartureAddress());
+            if (pack.getDepartureDate() != null)
+                element.setDepartureDate(pack.getDepartureDate());
             if (pack.getAwb().length() != 0)
                 element.setAwb(pack.getAwb());
-            if (pack.getDelivery_address().length() != 0)
-                element.setDelivery_address(pack.getDelivery_address());
-            if (pack.getDelivery_date() != null)
-                element.setDelivery_date(pack.getDelivery_date());
-            if (pack.getRecipient_name().length() != 0) {
-                element.setRecipient_name(pack.getRecipient_name());
+            if (pack.getDeliveryAddress().length() != 0)
+                element.setDeliveryAddress(pack.getDeliveryAddress());
+            if (pack.getDeliveryDate() != null)
+                element.setDeliveryDate(pack.getDeliveryDate());
+            if (pack.getRecipientName().length() != 0) {
+                element.setRecipientName(pack.getRecipientName());
                 // if customer name has changed, update customer
-                Customer customer = customerRepo.findByName(pack.getRecipient_name());
+                Customer customer = customerRepo.findByName(pack.getRecipientName());
                 if (customer != null)
                     element.setCustomer(customer);
                 else element.setCustomer(null);
             }
-            if (pack.getRecipient_phone().length() != 0)
-                element.setRecipient_phone(pack.getRecipient_phone());
+            if (pack.getRecipientPhone().length() != 0)
+                element.setRecipientPhone(pack.getRecipientPhone());
             return packageRepo.save(element);
         });
     }

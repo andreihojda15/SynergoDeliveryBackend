@@ -24,15 +24,15 @@ class PackageRepoOld {
         Package pack = new Package();
 
         pack.setId(RANDOM.nextInt());
-        pack.setSender_name(senderName);
-        pack.setSender_phone(senderPhoneNo);
-        pack.setDeparture_address(departureAddress);
-        pack.setDeparture_date(LocalDate.parse(departureDate));
+        pack.setSenderName(senderName);
+        pack.setSenderPhone(senderPhoneNo);
+        pack.setDepartureAddress(departureAddress);
+        pack.setDepartureDate(LocalDate.parse(departureDate));
         pack.setAwb(awb);
-        pack.setDelivery_address(deliveryAddress);
-        pack.setDelivery_date(LocalDate.parse(deliveryDate));
-        pack.setRecipient_name(recipientName);
-        pack.setRecipient_phone(recipientPhoneNo);
+        pack.setDeliveryAddress(deliveryAddress);
+        pack.setDeliveryDate(LocalDate.parse(deliveryDate));
+        pack.setRecipientName(recipientName);
+        pack.setRecipientPhone(recipientPhoneNo);
         packages.add(pack);
 
         return pack;

@@ -11,20 +11,20 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.EntityNotFoundException;
 import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 
 @RestController
-@RequestMapping("/packages")
+@RequestMapping("/api/packages")
 public class PackageController {
 
-    private Random RANDOM = new Random(1_000_000);
     @Autowired
     private PackageService packageService;
 
-    @GetMapping("/all")
+    @GetMapping
     public ResponseEntity<List<PackageDto>> fetchAllPackages() {
         List<Package> packages = packageService.getAll();
         return ResponseEntity.status(HttpStatus.OK).body(packages.stream().map(PackageDto::valueOf).toList());
@@ -39,14 +39,14 @@ public class PackageController {
     @GetMapping("/{id}")
     public ResponseEntity<Optional<Package>> fetchPackageById(@PathVariable("id") Integer id) {
         Optional<Package> pack = packageService.getPackageById(id);
-        return ResponseEntity.status(HttpStatus.OK).body(pack);
+        return ResponseEntity.status(pack.isPresent() ? HttpStatus.OK : HttpStatus.NOT_FOUND).body(pack.isPresent() ? pack : Optional.empty());
     }
 
-    @PostMapping("/add")
+    @PostMapping
     public ResponseEntity<PackageDto> addPackage(@RequestBody Package pack) {
-        Package added = packageService.buildPackage(RANDOM.nextInt(), pack.getDeparture_date(),
-                pack.getSender_name(), pack.getSender_phone(), pack.getDeparture_address(),
-                pack.getAwb(), pack.getDelivery_address(), pack.getDelivery_date(), pack.getRecipient_name(), pack.getRecipient_phone());
+        Package added = packageService.buildPackage(pack.getDepartureDate(),
+                pack.getSenderName(), pack.getSenderPhone(), pack.getDepartureAddress(),
+                pack.getAwb(), pack.getDeliveryAddress(), pack.getDeliveryDate(), pack.getRecipientName(), pack.getRecipientPhone());
 
         return ResponseEntity.status(HttpStatus.OK).body(PackageDto.valueOf(added));
     }
@@ -57,9 +57,14 @@ public class PackageController {
         return ResponseEntity.status(HttpStatus.OK).body(newPackage);
     }
 
-    @DeleteMapping("packages/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<?> deletePackage(@PathVariable Integer id) {
-        packageService.deleteById(id);
-        return ResponseEntity.noContent().build();
+        String result;
+        try {
+            result = packageService.deleteById(id);
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
+        return ResponseEntity.status(200).body(result);
     }
 }
