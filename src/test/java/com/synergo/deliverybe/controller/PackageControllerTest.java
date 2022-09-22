@@ -2,15 +2,12 @@ package com.synergo.deliverybe.controller;
 
 import com.synergo.deliverybe.model.Customer;
 import com.synergo.deliverybe.model.Package;
-import com.synergo.deliverybe.repository.PackageRepo;
 import com.synergo.deliverybe.services.PackageService;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.cache.support.NullValue;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -138,8 +135,10 @@ public class PackageControllerTest {
         int id = (int) (Math.random() * 100);
         package1.setId(id);
 
+        given(service.deleteById(id)).willReturn("Successfully deleted package");
+
         // when
-        mvc.perform(delete("/api/packages/" + package1.getId()).contentType(MediaType.APPLICATION_JSON)).andExpect(status().isNoContent());
+        mvc.perform(delete("/api/packages/" + package1.getId()).contentType(MediaType.APPLICATION_JSON)).andExpect(status().isOk());
 
         // then
         verify(service, times(1)).deleteById(package1.getId());

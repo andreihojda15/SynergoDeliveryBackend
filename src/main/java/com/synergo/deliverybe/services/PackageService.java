@@ -32,25 +32,23 @@ public class PackageService {
         return packageRepo.findAll();
     }
 
-    public Package buildPackage(LocalDate departureDate, String senderName,
-                                String senderPhoneNo, String departureAddress, String awb,
-                                String deliveryAddress, LocalDate deliveryDate, String recipientName, String recipientPhoneNo) {
-        Customer customer = customerRepo.findByName(recipientName);
-        Package pack = new Package();
+    public Package buildPackage(Package pack) {
+        Customer customer = customerRepo.findByName(pack.getRecipientName());
+        Package packToBuild = new Package();
 
-        pack.setSenderName(senderName);
-        pack.setSenderPhone(senderPhoneNo);
-        pack.setDepartureAddress(departureAddress);
-        pack.setDepartureDate(departureDate);
-        pack.setAwb(awb);
-        pack.setDeliveryAddress(deliveryAddress);
-        pack.setDeliveryDate(deliveryDate);
-        pack.setRecipientName(recipientName);
-        pack.setRecipientPhone(recipientPhoneNo);
-        pack.setCustomer(customer);
-        pack.setCar(null);
+        packToBuild.setSenderName(pack.getSenderName());
+        packToBuild.setSenderPhone(pack.getSenderPhone());
+        packToBuild.setDepartureAddress(pack.getDepartureAddress());
+        packToBuild.setDepartureDate(pack.getDepartureDate());
+        packToBuild.setAwb(pack.getAwb());
+        packToBuild.setDeliveryAddress(pack.getDeliveryAddress());
+        packToBuild.setDeliveryDate(pack.getDeliveryDate());
+        packToBuild.setRecipientName(pack.getRecipientName());
+        packToBuild.setRecipientPhone(pack.getRecipientPhone());
+        packToBuild.setCustomer(customer);
+        packToBuild.setCar(null);
 
-        return packageRepo.save(pack);
+        return packageRepo.save(packToBuild);
     }
 
     public List<Package> getAllPackagesByCustomer(Integer customerId) {
