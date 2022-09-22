@@ -63,7 +63,7 @@ public class PackageController {
         try {
             result = packageService.deleteById(id);
         } catch (EntityNotFoundException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
         return ResponseEntity.status(200).body(result);
     }
