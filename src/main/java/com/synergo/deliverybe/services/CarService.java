@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 @Service
 @Slf4j
@@ -36,30 +37,72 @@ public class CarService {
 
     public Optional<Car> updateCar(Car car, Integer id) {
         return carRepo.findById(id).map(car1 -> {
-           car1.setRegistrationNumber(car.getRegistrationNumber());
-           car1.setStatus(car.getStatus());
-           return carRepo.save(car1);
+            car1.setRegistrationNumber(car.getRegistrationNumber());
+            car1.setStatus(car.getStatus());
+            return carRepo.save(car1);
         });
     }
 
     public String deleteById(Integer id) {
         Optional<Car> car = carRepo.findById(id);
-        if(car.isEmpty()) {
+        if (car.isEmpty()) {
             throw new EntityNotFoundException("Car not found");
         }
 
         Integer id1 = car.get().getId();
         Driver driver = driverRepo.findByCar_Id(id1);
-        if(driver != null) {
+        if (driver != null) {
             driver.setCar(null);
         }
 
         Package pack = packageRepo.findByCar_Id(id1);
-        if(pack != null) {
+        if (pack != null) {
             pack.setCar(null);
         }
 
         carRepo.deleteById(id);
         return "Successfully deleted";
+    }
+
+    public String managePackages(Integer idCar, Integer idPackage) {
+        Optional<Car> car = carRepo.findById(idCar);
+        if (car.isEmpty()) {
+            throw new EntityNotFoundException("Car not found");
+        }
+        String result = "";
+        Optional<Package> pack = packageRepo.findById(idPackage).map(pack1 -> {
+            if (pack1.getCar() != null && pack1.getCar().getId().equals(car.get().getId())) {
+                pack1.setCar(null);
+                return packageRepo.save(pack1);
+            }
+            if (pack1.getCar() == null) {
+                pack1.setCar(car.get());
+            }
+            return packageRepo.save(pack1);
+        });
+
+
+        if (pack.isPresent()) {
+            if (pack.get().getCar() == null) {
+                result = "Deleted package from car";
+            }
+            if (pack.get().getCar() != null && pack.get().getCar().equals(car.get())) {
+                result = "Added package to car";
+            } else if (pack.get().getCar() != null && !pack.get().getCar().equals(car.get())) {
+                result = "Can't manage a package that belongs to a different car";
+            }
+        } else {
+            throw new EntityNotFoundException("Package not found");
+        }
+        return result;
+    }
+
+    public List<Package> getAvailablePackages(Integer id) {
+        if(carRepo.findById(id).isEmpty()){
+            throw new EntityNotFoundException("Car not found");
+        }
+        List<Package> all = packageRepo.findAll();
+        Stream<Package> a = all.stream().filter(pack -> pack.getCar() == null || pack.getCar().getId().equals(id));
+        return a.toList();
     }
 }
