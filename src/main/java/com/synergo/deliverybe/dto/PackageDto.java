@@ -6,7 +6,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.Instant;
 import java.time.LocalDate;
 
 @Data
@@ -16,7 +15,7 @@ import java.time.LocalDate;
 public class PackageDto {
     private Integer id;
     private String senderName;
-    private String senderPhone;
+    private String senderPhoneNumber;
     private String departureAddress;
     private LocalDate departureDate;
     private String awb;
@@ -31,7 +30,7 @@ public class PackageDto {
         return PackageDto.builder()
                 .id(pack.getId())
                 .senderName(pack.getSenderName())
-                .senderPhone(pack.getSenderPhone())
+                .senderPhoneNumber(pack.getSenderPhone())
                 .departureAddress(pack.getDepartureAddress())
                 .departureDate(pack.getDepartureDate())
                 .awb(pack.getAwb())
