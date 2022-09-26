@@ -15,8 +15,8 @@ public class Car {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @Column
-    private String registration_number;
+    @Column(name = "registration_number")
+    private String registrationNumber;
     @Column
     private String status;
 

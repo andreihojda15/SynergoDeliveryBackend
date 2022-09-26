@@ -29,21 +29,21 @@ public class CustomerService {
         return customerRepo.getReferenceById(id);
     }
 
-    public Customer addCustomer(String name,String addresse, String phone)
+    public Customer addCustomer(Customer customer)
     {
 
-        Customer customer = new Customer();
-        customer.setName(name);
-        customer.setAddress(addresse);
-        customer.setPhoneNumber(phone);
-        return customerRepo.save(customer);
+        Customer customer1 = new Customer();
+        customer1.setName(customer.getName());
+        customer1.setAddress(customer.getAddress());
+        customer1.setPhoneNumber(customer.getPhoneNumber());
+        return customerRepo.save(customer1);
     }
 
-    public Customer editCustomer(int id,String name,String addresse, String phone)
+    public Customer editCustomer(int id,String name,String address, String phone)
     {
         Customer customer = getCustomerbyId(id);
         customer.setName(name);
-        customer.setAddress(addresse);
+        customer.setAddress(address);
         customer.setPhoneNumber(phone);
         return customerRepo.save(customer);
     }

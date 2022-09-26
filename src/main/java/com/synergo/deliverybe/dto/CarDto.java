@@ -20,7 +20,7 @@ public class CarDto {
     public static CarDto valueOf(Car car) {
         return CarDto.builder()
                 .id(car.getId())
-                .registration_number(car.getRegistration_number())
+                .registration_number(car.getRegistrationNumber())
                 .status(car.getStatus())
                 .build();
     }

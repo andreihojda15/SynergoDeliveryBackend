@@ -13,20 +13,20 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/customers")
+@RequestMapping("/api/customers")
 public class CustomerController {
 
     @Autowired
     private CustomerService customerService;
 
-    @GetMapping("/all")
+    @GetMapping
     public ResponseEntity<List<CustomerDto>> fetchAllDrivers() {
         List<Customer> customers = customerService.getAll();
 
         return ResponseEntity.status(HttpStatus.OK).body(customers.stream().map(CustomerDto::valueOf).toList());
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<CustomerDto> deleteCustomer(@PathVariable Integer id)
     {
         Customer customer = customerService.getCustomerbyId(id);
@@ -34,15 +34,16 @@ public class CustomerController {
         return ResponseEntity.status(HttpStatus.OK).body(CustomerDto.valueOf(customer));
     }
 
-    @PostMapping("/add")
+    @PostMapping
     public ResponseEntity<CustomerDto> addCustomer(@RequestBody Customer customer)
     {
-        Customer customer1 = customerService.addCustomer("nameTest","addresseTest", "+1 500-400-1300");
+//        Customer customer1 = customerService.addCustomer("nameTest","addresseTest", "+1 500-400-1300");
+        Customer customer1 = customerService.addCustomer(customer);
         return ResponseEntity.status(HttpStatus.OK).body(CustomerDto.valueOf(customer1));
     }
 
 
-    @PutMapping("/edite/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<CustomerDto> editCustomer(@PathVariable Integer id ,@RequestBody Customer customer)
     {
         Customer customer1 = customerService.editCustomer(id,"nameEdit","addresseEdit", "+1 900-800-1000");
