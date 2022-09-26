@@ -15,12 +15,12 @@ import lombok.NoArgsConstructor;
 public class CarDto {
 
     private Integer id;
-    private String registration_number;
+    private String registrationNumber;
     private String status;
     public static CarDto valueOf(Car car) {
         return CarDto.builder()
                 .id(car.getId())
-                .registration_number(car.getRegistrationNumber())
+                .registrationNumber(car.getRegistrationNumber())
                 .status(car.getStatus())
                 .build();
     }
