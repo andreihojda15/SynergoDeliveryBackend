@@ -45,13 +45,13 @@ public class CarController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteCar(@PathVariable Integer id) {
-        String result;
+        Car result;
         try {
             result = carService.deleteById(id);
         } catch (EntityNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
-        return ResponseEntity.status(200).body(result);
+        return ResponseEntity.status(200).body(CarDto.toDto(result));
     }
 
     @PutMapping("/managePackages/{id}")
