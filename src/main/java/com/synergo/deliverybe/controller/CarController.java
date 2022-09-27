@@ -8,13 +8,15 @@ import com.synergo.deliverybe.services.CarService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityNotFoundException;
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
+@Validated
 @RestController
 @RequestMapping("/api/cars")
 public class CarController {
@@ -26,12 +28,14 @@ public class CarController {
     public ResponseEntity<List<CarDto>> fetchAllCars() {
         List<Car> cars = carService.getAll();
 
-        return ResponseEntity.status(HttpStatus.OK).body(cars.stream().map(CarDto::valueOf).toList());
+        return ResponseEntity.status(HttpStatus.OK).body(cars.stream().map(CarDto::toDto).toList());
     }
 
     @PostMapping
-    public ResponseEntity<CarDto> addCar(@RequestBody Car car) {
-        return ResponseEntity.status(HttpStatus.OK).body(CarDto.valueOf(carService.addCar(car)));
+    public ResponseEntity<CarDto> addCar(@Valid @RequestBody CarDto carDto) {
+        Car car = CarDto.fromDto(carDto);
+
+        return ResponseEntity.status(HttpStatus.OK).body(CarDto.toDto(carService.addCar(car)));
     }
 
     @PutMapping("/{id}")
