@@ -23,7 +23,7 @@ public class DriverController {
     public ResponseEntity<List<DriverDto>> fetchAllDrivers() {
         List<Driver> drivers = driverService.getAll();
 
-        return ResponseEntity.status(HttpStatus.OK).body(drivers.stream().map(DriverDto::valueOf).toList());
+        return ResponseEntity.status(HttpStatus.OK).body(drivers.stream().map(DriverDto::toDto).toList());
     }
 
     @PostMapping
@@ -31,7 +31,7 @@ public class DriverController {
         Driver added = driverService.buildDriver(driver.getId(), driver.getName(),
                 driver.getPhoneNumber());
 
-        return ResponseEntity.status(HttpStatus.OK).body(DriverDto.valueOf(added));
+        return ResponseEntity.status(HttpStatus.OK).body(DriverDto.toDto(added));
     }
 
     @PutMapping("/{id}")

@@ -18,12 +18,19 @@ public class DriverDto {
     private Integer carId;
 
 
-    public static DriverDto valueOf(Driver driver) {
+    public static DriverDto toDto(Driver driver) {
         return DriverDto.builder()
                 .id(driver.getId())
                 .name(driver.getName())
                 .phoneNumber(driver.getPhoneNumber())
-                .carId(driver.getCar().getId())
+                .carId(driver.getCar() != null ? driver.getCar().getId() : null)
+                .build();
+    }
+
+    public static Driver fromDto(DriverDto carDto) {
+        return Driver.builder()
+                .name(carDto.getName())
+                .phoneNumber(carDto.getPhoneNumber())
                 .build();
     }
 
