@@ -64,12 +64,11 @@ public class CarService {
         return car.get();
     }
 
-    public String managePackages(Integer idCar, Integer idPackage) {
+    public Package managePackages(Integer idCar, Integer idPackage) throws Exception {
         Optional<Car> car = carRepo.findById(idCar);
         if (car.isEmpty()) {
             throw new EntityNotFoundException("Car not found");
         }
-        String result = "";
         Optional<Package> pack = packageRepo.findById(idPackage).map(pack1 -> {
             if (pack1.getCar() != null && pack1.getCar().getId().equals(car.get().getId())) {
                 pack1.setCar(null);
@@ -80,25 +79,11 @@ public class CarService {
             }
             return packageRepo.save(pack1);
         });
-
-
-        if (pack.isPresent()) {
-            if (pack.get().getCar() == null) {
-                result = "Deleted package from car";
-            }
-            if (pack.get().getCar() != null && pack.get().getCar().equals(car.get())) {
-                result = "Added package to car";
-            } else if (pack.get().getCar() != null && !pack.get().getCar().equals(car.get())) {
-                result = "Can't manage a package that belongs to a different car";
-            }
-        } else {
-            throw new EntityNotFoundException("Package not found");
-        }
-        return result;
+        return pack.get();
     }
 
     public List<Package> getAvailablePackages(Integer id) {
-        if(carRepo.findById(id).isEmpty()){
+        if (carRepo.findById(id).isEmpty()) {
             throw new EntityNotFoundException("Car not found");
         }
         List<Package> all = packageRepo.findAll();

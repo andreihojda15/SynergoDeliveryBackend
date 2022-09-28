@@ -55,15 +55,15 @@ public class CarController {
     }
 
     @PutMapping("/managePackages/{id}")
-    public ResponseEntity<?> managePackages(@PathVariable Integer id, @RequestParam Integer packageId) {
-        String result;
+    public ResponseEntity<?> managePackages(@PathVariable Integer id, @RequestParam(name = "packageId") Integer packageId) {
+        Package result;
         try {
             result = carService.managePackages(id, packageId);
-        } catch (EntityNotFoundException e) {
+        } catch (Exception e) {
             return ResponseEntity.status(404).body(e.getMessage());
         }
 
-        return ResponseEntity.status(200).body(result);
+        return ResponseEntity.status(200).body(PackageDto.toDto(result));
     }
 
     @GetMapping("/availablePackages/{id}")
@@ -74,6 +74,6 @@ public class CarController {
         } catch (EntityNotFoundException e) {
             return ResponseEntity.status(404).body(e.getMessage());
         }
-        return ResponseEntity.status(200).body(availablePackages.stream().map(PackageDto::valueOf).toList());
+        return ResponseEntity.status(200).body(availablePackages.stream().map(PackageDto::toDto).toList());
     }
 }

@@ -1,21 +1,16 @@
 package com.synergo.deliverybe.controller;
 
 import com.synergo.deliverybe.dto.PackageDto;
-import com.synergo.deliverybe.model.Car;
 import com.synergo.deliverybe.model.Package;
 import com.synergo.deliverybe.services.PackageService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityNotFoundException;
-import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Optional;
-import java.util.Random;
 
 @RestController
 @RequestMapping("/api/packages")
@@ -27,13 +22,13 @@ public class PackageController {
     @GetMapping
     public ResponseEntity<List<PackageDto>> fetchAllPackages() {
         List<Package> packages = packageService.getAll();
-        return ResponseEntity.status(HttpStatus.OK).body(packages.stream().map(PackageDto::valueOf).toList());
+        return ResponseEntity.status(HttpStatus.OK).body(packages.stream().map(PackageDto::toDto).toList());
     }
 
     @GetMapping("/customer")
     public ResponseEntity<List<PackageDto>> fetchAllPackagesByCustomer(@RequestParam(value = "customer_id") Integer customerId) {
         List<Package> packages = packageService.getAllPackagesByCustomer(customerId);
-        return ResponseEntity.status(HttpStatus.OK).body(packages.stream().map(PackageDto::valueOf).toList());
+        return ResponseEntity.status(HttpStatus.OK).body(packages.stream().map(PackageDto::toDto).toList());
     }
 
     @GetMapping("/{id}")
@@ -46,7 +41,7 @@ public class PackageController {
     public ResponseEntity<PackageDto> addPackage(@RequestBody Package pack) {
         Package added = packageService.buildPackage(pack);
 
-        return ResponseEntity.status(HttpStatus.OK).body(PackageDto.valueOf(added));
+        return ResponseEntity.status(HttpStatus.OK).body(PackageDto.toDto(added));
     }
 
     @PutMapping("/{id}")
