@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
 
@@ -42,7 +43,12 @@ public class DriverController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteDriver(@PathVariable Integer id) {
-        driverService.deleteById(id);
-        return ResponseEntity.noContent().build();
+        Driver result;
+        try {
+            result = driverService.deleteById(id);
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
+        return ResponseEntity.status(200).body(result);
     }
 }

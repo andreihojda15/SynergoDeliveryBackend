@@ -46,10 +46,12 @@ public class DriverService {
         });
     }
 
-    public void deleteById(Integer id) throws NotFoundException {
-        if(!driverRepo.findById(id).isPresent()){
+    public Driver deleteById(Integer id) throws NotFoundException {
+        Optional<Driver> driverToDelete = driverRepo.findById(id);
+        if(!driverToDelete.isPresent()){
             throw new NotFoundException("id" +id + "not present");
         }
         driverRepo.deleteById(id);
+        return driverToDelete.get();
     }
 }
