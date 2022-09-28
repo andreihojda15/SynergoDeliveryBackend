@@ -1,15 +1,13 @@
 package com.synergo.deliverybe.services;
 
-import com.synergo.deliverybe.dto.DriverDto;
-import com.synergo.deliverybe.model.Car;
-import com.synergo.deliverybe.model.Customer;
+
 import com.synergo.deliverybe.model.Driver;
 import com.synergo.deliverybe.repository.CarRepo;
 import com.synergo.deliverybe.repository.DriverRepo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
+
 import org.webjars.NotFoundException;
 
 import java.util.List;
@@ -29,12 +27,13 @@ public class DriverService {
     }
 
 
-    public Driver buildDriver(Integer id, String name, String phone) {
+    public Driver buildDriver(Integer id, String name, String phoneNumber, String status) {
         Driver driver = new Driver();
 
         driver.setId(id);
         driver.setName(name);
-        driver.setPhone(phone);
+        driver.setPhoneNumber(phoneNumber);
+        driver.setStatus(status);
 
         return driverRepo.save(driver);
     }
@@ -42,7 +41,8 @@ public class DriverService {
     public Optional<Driver> updateById(Driver driver, Integer id){
         return driverRepo.findById(id).map(e -> {
          e.setName(driver.getName());
-         e.setPhone(driver.getPhone());
+         e.setPhoneNumber(driver.getPhoneNumber());
+         e.setStatus(driver.getStatus());
 
          return driverRepo.save(e);
         });

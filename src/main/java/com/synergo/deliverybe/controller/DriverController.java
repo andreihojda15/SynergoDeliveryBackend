@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+
 import java.util.List;
 import java.util.Optional;
 
@@ -28,7 +29,7 @@ public class DriverController {
     @PostMapping
     public ResponseEntity<DriverDto> addDriver(@RequestBody Driver driver) {
         Driver added = driverService.buildDriver(driver.getId(), driver.getName(),
-                driver.getPhone());
+                driver.getPhoneNumber(),  driver.getStatus());
 
         return ResponseEntity.status(HttpStatus.OK).body(DriverDto.valueOf(added));
     }
