@@ -15,7 +15,6 @@ public class DriverDto {
     private Integer id;
     private String name;
     private String phoneNumber;
-    private String status;
     private Integer carId;
 
 
@@ -24,7 +23,6 @@ public class DriverDto {
                 .id(driver.getId())
                 .name(driver.getName())
                 .phoneNumber(driver.getPhoneNumber())
-                .status(driver.getStatus())
                 .carId(driver.getCar().getId())
                 .build();
     }

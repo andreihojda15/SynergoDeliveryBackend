@@ -29,7 +29,7 @@ public class DriverController {
     @PostMapping
     public ResponseEntity<DriverDto> addDriver(@RequestBody Driver driver) {
         Driver added = driverService.buildDriver(driver.getId(), driver.getName(),
-                driver.getPhoneNumber(),  driver.getStatus());
+                driver.getPhoneNumber());
 
         return ResponseEntity.status(HttpStatus.OK).body(DriverDto.valueOf(added));
     }

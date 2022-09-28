@@ -27,13 +27,12 @@ public class DriverService {
     }
 
 
-    public Driver buildDriver(Integer id, String name, String phoneNumber, String status) {
+    public Driver buildDriver(Integer id, String name, String phoneNumber) {
         Driver driver = new Driver();
 
         driver.setId(id);
         driver.setName(name);
         driver.setPhoneNumber(phoneNumber);
-        driver.setStatus(status);
 
         return driverRepo.save(driver);
     }
@@ -42,7 +41,6 @@ public class DriverService {
         return driverRepo.findById(id).map(e -> {
          e.setName(driver.getName());
          e.setPhoneNumber(driver.getPhoneNumber());
-         e.setStatus(driver.getStatus());
 
          return driverRepo.save(e);
         });
