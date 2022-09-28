@@ -35,9 +35,9 @@ public class DriverController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Optional<Driver>> updateById(@RequestBody Driver driver, @PathVariable Integer id) {
+    public ResponseEntity<DriverDto> updateById(@RequestBody Driver driver, @PathVariable Integer id) {
         Optional<Driver> updatedDriver = driverService.updateById(driver, id);
-        return ResponseEntity.status(HttpStatus.OK).body(updatedDriver);
+        return ResponseEntity.status(HttpStatus.OK).body(DriverDto.toDto(updatedDriver.get()));
     }
 
     @DeleteMapping("/{id}")
