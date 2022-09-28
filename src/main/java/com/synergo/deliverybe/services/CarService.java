@@ -43,7 +43,7 @@ public class CarService {
         });
     }
 
-    public String deleteById(Integer id) {
+    public Car deleteById(Integer id) {
         Optional<Car> car = carRepo.findById(id);
         if (car.isEmpty()) {
             throw new EntityNotFoundException("Car not found");
@@ -61,7 +61,7 @@ public class CarService {
         }
 
         carRepo.deleteById(id);
-        return "Successfully deleted";
+        return car.get();
     }
 
     public String managePackages(Integer idCar, Integer idPackage) {
