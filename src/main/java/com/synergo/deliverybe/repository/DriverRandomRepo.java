@@ -31,7 +31,7 @@ public class DriverRandomRepo implements IDriverRepo {
         int id = RANDOM.nextInt();
         randomDriven.setId(id);
         randomDriven.setName("name " + id);
-        randomDriven.setPhone("phone " + id);
+        randomDriven.setPhoneNumber("phoneNumber " + id);
 
         Car car = new Car();
         car.setId(RANDOM.nextInt());

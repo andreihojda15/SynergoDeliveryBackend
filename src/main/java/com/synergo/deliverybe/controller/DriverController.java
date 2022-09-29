@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,26 +24,31 @@ public class DriverController {
     public ResponseEntity<List<DriverDto>> fetchAllDrivers() {
         List<Driver> drivers = driverService.getAll();
 
-        return ResponseEntity.status(HttpStatus.OK).body(drivers.stream().map(DriverDto::valueOf).toList());
+        return ResponseEntity.status(HttpStatus.OK).body(drivers.stream().map(DriverDto::toDto).toList());
     }
 
     @PostMapping
     public ResponseEntity<DriverDto> addDriver(@RequestBody Driver driver) {
         Driver added = driverService.buildDriver(driver.getId(), driver.getName(),
-                driver.getPhone());
+                driver.getPhoneNumber());
 
-        return ResponseEntity.status(HttpStatus.OK).body(DriverDto.valueOf(added));
+        return ResponseEntity.status(HttpStatus.OK).body(DriverDto.toDto(added));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Optional<Driver>> updateById(@RequestBody Driver driver, @PathVariable Integer id) {
+    public ResponseEntity<DriverDto> updateById(@RequestBody Driver driver, @PathVariable Integer id) {
         Optional<Driver> updatedDriver = driverService.updateById(driver, id);
-        return ResponseEntity.status(HttpStatus.OK).body(updatedDriver);
+        return ResponseEntity.status(HttpStatus.OK).body(DriverDto.toDto(updatedDriver.get()));
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteDriver(@PathVariable Integer id) {
-        driverService.deleteById(id);
-        return ResponseEntity.noContent().build();
+        Driver result;
+        try {
+            result = driverService.deleteById(id);
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
+        return ResponseEntity.status(200).body(result);
     }
 }

@@ -18,7 +18,7 @@ public class Driver {
     @Column
     private String name;
     @Column
-    private String phone;
+    private String phoneNumber;
     @OneToOne
     @JoinColumn(name = "car_id")
     private Car car;
