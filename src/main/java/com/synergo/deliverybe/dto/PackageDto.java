@@ -1,6 +1,6 @@
 package com.synergo.deliverybe.dto;
 
-import com.synergo.deliverybe.model.Car;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.synergo.deliverybe.model.Package;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -18,16 +18,18 @@ public class PackageDto {
     private String senderName;
     private String senderPhoneNumber;
     private String departureAddress;
+    @JsonFormat(pattern="yyyy-MM-dd")
     private LocalDate departureDate;
     private String awb;
     private String deliveryAddress;
+    @JsonFormat(pattern="yyyy-MM-dd")
     private LocalDate deliveryDate;
     private String recipientName;
     private String recipientPhone;
     private Integer customerId;
     private Integer carId;
 
-    public static PackageDto toDto(Package pack){
+    public static PackageDto toDto(Package pack) {
         return PackageDto.builder()
                 .id(pack.getId())
                 .senderName(pack.getSenderName())
