@@ -1,5 +1,6 @@
 package com.synergo.deliverybe.repository;
 
+import com.synergo.deliverybe.model.Car;
 import com.synergo.deliverybe.model.Customer;
 import com.synergo.deliverybe.model.Package;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -13,8 +14,8 @@ public interface PackageRepo extends JpaRepository<Package, Integer> {
 
     List<Package> getPackagesByCustomer(Customer customer);
 
-    @Query("select p from Package p where p.car.id = ?1")
-    Package findByCar_Id(Integer id);
+    @Query("select p from Package p where p.car = ?1")
+    List<Package> findByCar(Car car);
 
 
 }
