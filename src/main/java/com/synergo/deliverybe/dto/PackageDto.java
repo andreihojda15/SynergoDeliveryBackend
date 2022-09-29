@@ -1,5 +1,6 @@
 package com.synergo.deliverybe.dto;
 
+import com.synergo.deliverybe.model.Car;
 import com.synergo.deliverybe.model.Package;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -26,7 +27,7 @@ public class PackageDto {
     private Integer customerId;
     private Integer carId;
 
-    public static PackageDto valueOf(Package pack){
+    public static PackageDto toDto(Package pack){
         return PackageDto.builder()
                 .id(pack.getId())
                 .senderName(pack.getSenderName())
@@ -42,4 +43,20 @@ public class PackageDto {
                 .carId(pack.getCar() != null ? pack.getCar().getId() : null)
                 .build();
     }
+
+    public static Package fromDto(PackageDto packageDto) {
+        return Package.builder()
+                .id(packageDto.getId())
+                .senderName(packageDto.getSenderName())
+                .senderPhone(packageDto.getSenderPhoneNumber())
+                .departureAddress(packageDto.getDepartureAddress())
+                .departureDate(packageDto.getDepartureDate())
+                .awb(packageDto.getAwb())
+                .deliveryAddress(packageDto.getDeliveryAddress())
+                .deliveryDate(packageDto.getDeliveryDate())
+                .recipientName(packageDto.getRecipientName())
+                .recipientPhone(packageDto.getRecipientPhone())
+                .build();
+    }
+
 }
