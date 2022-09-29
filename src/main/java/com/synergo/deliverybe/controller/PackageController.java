@@ -45,16 +45,16 @@ public class PackageController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Optional<Package>> updatePackage(@RequestBody Package pack, @PathVariable Integer id) {
+    public ResponseEntity<PackageDto> updatePackage(@RequestBody Package pack, @PathVariable Integer id) {
         Optional<Package> newPackage = packageService.updatePackage(pack, id);
-        return ResponseEntity.status(HttpStatus.OK).body(newPackage);
+        return ResponseEntity.status(HttpStatus.OK).body(PackageDto.toDto(newPackage.get()));
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deletePackage(@PathVariable Integer id) {
-        String result;
+        Package result;
         try {
-            result = packageService.deleteById(id);
+            result = packageService.deleteById(id).get();
         } catch (EntityNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
