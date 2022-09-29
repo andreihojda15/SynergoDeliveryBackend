@@ -44,24 +44,26 @@ public class CarService {
     }
 
     public Car deleteById(Integer id) {
-        Optional<Car> car = carRepo.findById(id);
-        if (car.isEmpty()) {
+        Optional<Car> carOptional = carRepo.findById(id);
+        if (carOptional.isEmpty()) {
             throw new EntityNotFoundException("Car not found");
         }
 
-        Integer id1 = car.get().getId();
-        Driver driver = driverRepo.findByCar_Id(id1);
+        Car car = carOptional.get();
+        Driver driver = driverRepo.findByCar(car);
         if (driver != null) {
             driver.setCar(null);
         }
 
-        Package pack = packageRepo.findByCar_Id(id1);
+        List<Package> pack = packageRepo.findByCar(car);
         if (pack != null) {
-            pack.setCar(null);
+            for (Package aPackage : pack) {
+                aPackage.setCar(null);
+            }
         }
 
         carRepo.deleteById(id);
-        return car.get();
+        return carOptional.get();
     }
 
     public Package managePackages(Integer idCar, Integer idPackage) throws Exception {
