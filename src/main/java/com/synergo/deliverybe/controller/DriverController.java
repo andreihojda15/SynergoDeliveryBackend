@@ -56,11 +56,23 @@ public class DriverController {
         }
         return ResponseEntity.status(200).body(result);
     }
-    @GetMapping("/availableCars/{id}")
-    public ResponseEntity<?> getAvailableCars(@PathVariable Integer id) {
+
+    @PutMapping("manageDriver/{idDriver}")
+    public ResponseEntity<?> manageDriver(@PathVariable Integer idDriver, @RequestParam(name = "carId") Integer idCar) {
+        Driver result;
+        try {
+            result = driverService.manageDriver(idDriver, idCar);
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(DriverDto.toDto(result));
+    }
+
+    @GetMapping("/availableCars")
+    public ResponseEntity<?> getAvailableCars() {
         List<Car> availableCars;
         try {
-            availableCars = driverService.getAvailableCars(id);
+            availableCars = driverService.getAvailableCars();
         } catch (EntityNotFoundException e) {
             return ResponseEntity.status(404).body(e.getMessage());
         }
