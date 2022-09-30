@@ -1,7 +1,11 @@
 package com.synergo.deliverybe.controller;
 
+import com.synergo.deliverybe.dto.CarDto;
 import com.synergo.deliverybe.dto.DriverDto;
+import com.synergo.deliverybe.dto.PackageDto;
+import com.synergo.deliverybe.model.Car;
 import com.synergo.deliverybe.model.Driver;
+import com.synergo.deliverybe.model.Package;
 import com.synergo.deliverybe.services.DriverService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,6 +31,7 @@ public class DriverController {
         return ResponseEntity.status(HttpStatus.OK).body(drivers.stream().map(DriverDto::toDto).toList());
     }
 
+
     @PostMapping
     public ResponseEntity<DriverDto> addDriver(@RequestBody Driver driver) {
         Driver added = driverService.buildDriver(driver.getId(), driver.getName(),
@@ -50,5 +55,15 @@ public class DriverController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
         return ResponseEntity.status(200).body(result);
+    }
+    @GetMapping("/availableCars/{id}")
+    public ResponseEntity<?> getAvailableCars(@PathVariable Integer id) {
+        List<Car> availableCars;
+        try {
+            availableCars = driverService.getAvailableCars(id);
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.status(404).body(e.getMessage());
+        }
+        return ResponseEntity.status(200).body(availableCars.stream().map(CarDto::toDto).toList());
     }
 }
