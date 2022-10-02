@@ -50,21 +50,18 @@ public class CustomerService {
 
     public Customer addCustomer(Customer customer)
     {
-
-        Customer customer1 = new Customer();
-        customer1.setName(customer.getName());
-        customer1.setAddress(customer.getAddress());
-        customer1.setPhoneNumber(customer.getPhoneNumber());
-        return customerRepo.save(customer1);
+        return customerRepo.save(customer);
     }
 
-    public Customer editCustomer(int id,String name,String address, String phone)
+    public Optional<Customer> editCustomer(Customer customer, Integer id)
     {
-        Customer customer = getCustomerbyId(id);
-        customer.setName(name);
-        customer.setAddress(address);
-        customer.setPhoneNumber(phone);
-        return customerRepo.save(customer);
+        return customerRepo.findById(id).map(ecustomer -> {
+            ecustomer.setName(customer.getName());
+            ecustomer.setPhoneNumber(customer.getPhoneNumber());
+            ecustomer.setAddress(customer.getAddress());
+
+            return customerRepo.save(ecustomer);
+        });
     }
 
 }

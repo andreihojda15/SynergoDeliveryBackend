@@ -4,13 +4,16 @@ import com.synergo.deliverybe.dto.CustomerDto;
 import com.synergo.deliverybe.dto.DriverDto;
 import com.synergo.deliverybe.model.Customer;
 import com.synergo.deliverybe.services.CustomerService;
+import org.aspectj.weaver.loadtime.Options;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/customers")
@@ -34,19 +37,17 @@ public class CustomerController {
     }
 
     @PostMapping
-    public ResponseEntity<CustomerDto> addCustomer(@RequestBody Customer customer)
+    public ResponseEntity<CustomerDto> addCustomer(@RequestBody CustomerDto customerDto)
     {
-//        Customer customer1 = customerService.addCustomer("nameTest","addresseTest", "+1 500-400-1300");
-        Customer customer1 = customerService.addCustomer(customer);
-        return ResponseEntity.status(HttpStatus.OK).body(CustomerDto.valueOf(customer1));
+        Customer customer = CustomerDto.fromDto(customerDto);
+        return ResponseEntity.status(HttpStatus.OK).body(CustomerDto.valueOf(customerService.addCustomer(customer)));
     }
 
 
     @PutMapping("/{id}")
-    public ResponseEntity<CustomerDto> editCustomer(@PathVariable Integer id ,@RequestBody Customer customer)
+    public ResponseEntity<Optional<Customer>> editCustomer(@PathVariable Integer id , @RequestBody Customer customer)
     {
-        Customer customer1 = customerService.editCustomer(id,"nameEdit","addresseEdit", "+1 900-800-1000");
-        return ResponseEntity.status(HttpStatus.OK).body(CustomerDto.valueOf(customer1));
+        return ResponseEntity.status(HttpStatus.OK).body(customerService.editCustomer(customer, id));
     }
 
 

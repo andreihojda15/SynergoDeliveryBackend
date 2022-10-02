@@ -25,4 +25,13 @@ public class CustomerDto {
                 .address(customer.getAddress())
                 .build();
     }
+
+    public static Customer fromDto(CustomerDto customerDto)
+    {
+        return Customer.builder()
+                .name(customerDto.getName())
+                .phoneNumber(customerDto.getPhoneNumber())
+                .address(customerDto.getAddress())
+                .build();
+    }
 }
