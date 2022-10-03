@@ -19,8 +19,8 @@ public class Package {
     private Integer id;
     @Column(name = "sender_name")
     private String senderName;
-    @Column(name = "sender_phone")
-    private String senderPhone;
+    @Column(name = "sender_phone_number")
+    private String senderPhoneNumber;
     @Column(name = "departure_address")
     private String departureAddress;
     @Column(name = "departure_date")

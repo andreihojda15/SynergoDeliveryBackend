@@ -37,7 +37,7 @@ public class PackageService {
         Package packToBuild = new Package();
 
         packToBuild.setSenderName(pack.getSenderName());
-        packToBuild.setSenderPhone(pack.getSenderPhone());
+        packToBuild.setSenderPhoneNumber(pack.getSenderPhoneNumber());
         packToBuild.setDepartureAddress(pack.getDepartureAddress());
         packToBuild.setDepartureDate(pack.getDepartureDate());
         packToBuild.setAwb(pack.getAwb());
@@ -59,12 +59,12 @@ public class PackageService {
         return packageRepo.findById(id);
     }
 
-    public String deleteById(Integer id) {
+    public Optional<Package> deleteById(Integer id) {
         Optional<Package> packageToDelete = packageRepo.findById(id);
         if(packageToDelete.isEmpty())
             throw new EntityNotFoundException("Can't delete package because it doesn't exist.");
         packageRepo.deleteById(id);
-        return "Successfully deleted package";
+        return packageToDelete;
     }
 
     public Optional<Package> updatePackage(Package pack, Integer id) {
@@ -72,13 +72,14 @@ public class PackageService {
             if (pack.getSenderName().length() != 0) {
                 element.setSenderName(pack.getSenderName());
                 // if driver has been changed, update car_id of package
-                Driver driver = driverRepo.findByName(pack.getSenderName());
-                if (driver != null)
-                    element.setCar(driver.getCar());
+                String senderName = pack.getSenderName();
+                Optional<Driver> driver = driverRepo.findByName(senderName);
+                if (driver.isPresent())
+                    element.setCar(driver.get().getCar());
                 else element.setCar(null);
             }
-            if (pack.getSenderPhone().length() != 0)
-                element.setSenderPhone(pack.getSenderPhone());
+            if (pack.getSenderPhoneNumber().length() != 0)
+                element.setSenderPhoneNumber(pack.getSenderPhoneNumber());
             if (pack.getDepartureAddress().length() != 0)
                 element.setDepartureAddress(pack.getDepartureAddress());
             if (pack.getDepartureDate() != null)
