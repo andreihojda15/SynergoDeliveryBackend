@@ -17,5 +17,6 @@ public interface PackageRepo extends JpaRepository<Package, Integer> {
     @Query("select p from Package p where p.car = ?1")
     List<Package> findByCar(Car car);
 
-
+    @Query("select p from Package p where p.customer.id = ?1")
+    List<Package> findByCustomer_Id(Integer id);
 }
